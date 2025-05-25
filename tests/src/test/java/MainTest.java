@@ -9,6 +9,8 @@ import pages.HomePage;
 import pages.LoginPage;
 import pages.ProfilePage;
 
+import static org.junit.Assert.assertEquals;
+
 public class MainTest {
 	private WebDriver driver;
 
@@ -20,13 +22,23 @@ public class MainTest {
 	}
 
 	@Test
-	public void testSelenium() {
+	public void testSelenium() throws InterruptedException {
 		HomePage homePage = new HomePage(this.driver);
 		homePage.acceptCookies();
+
+		// Hover
+		assertEquals("rgba(0, 0, 0, 1)", homePage.getLoginButtonColor());
+		assertEquals("rgba(255, 245, 0, 1)", homePage.getLoginButtonColorHovered());
+
+		// Login continued
 		LoginPage loginPage = homePage.goToLoginPage();
 		ProfilePage profilePage = loginPage.logIn();
 
 		Assert.assertTrue(profilePage.isLoginSuccessful());
+
+		//Logout
+		profilePage.logOut();
+		Assert.assertTrue(homePage.isLogedOut());
 	}
 
 	@After
