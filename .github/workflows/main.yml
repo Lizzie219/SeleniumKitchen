@@ -1,0 +1,48 @@
+name: Run Unit Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  run_unit_test:
+    runs-on: ubuntu-22.04
+
+    env:
+      TZ: Europe/Budapest
+      JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
+      GRADLE_VERSION: 7.4
+      GRADLE_HOME: /opt/gradle
+      PATH: /opt/gradle/bin:/usr/lib/jvm/java-8-openjdk-amd64/bin:${{ env.PATH }}
+
+    steps:
+      - name: Set timezone
+        run: |
+          sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+          echo $TZ | sudo tee /etc/timezone
+          sudo dpkg-reconfigure -f noninteractive tzdata
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Java 8
+        run: |
+          sudo add-apt-repository ppa:openjdk-r/ppa -y
+          sudo apt-get update
+          sudo apt-get install -y openjdk-8-jdk
+
+      - name: Install Gradle 7.4
+        run: |
+          wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip
+          unzip gradle-${GRADLE_VERSION}-bin.zip
+          sudo mv gradle-${GRADLE_VERSION} /opt/gradle
+          sudo ln -s /opt/gradle/bin/gradle /usr/bin/gradle
+
+      - name: Verify Java and Gradle
+        run: |
+          java -version
+          gradle -v
+
+      - name: Run Unit Tests
+        run: gradle test
