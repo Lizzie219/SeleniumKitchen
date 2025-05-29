@@ -11,7 +11,6 @@ public class HomePage extends Page {
 	private static final Config CONFIG = Config.getConfig();
 	private static final By LOGIN_BUTTON_LOCATOR = By.xpath("//a[@href='/belepes/']");
 	private static final By COOKIE_ACCEPT_BUTTON = By.xpath("//button[@id='accept-btn']");
-	private static final By LOGGED_OUT_NAVBAR = By.xpath("//nav[@class='nav-user nav-user-logged-out']");
 
 	public HomePage(WebDriver driver) {
 		super(driver);
@@ -40,9 +39,5 @@ public class HomePage extends Page {
 
 	private WebElement getLoginButton() {
 		return waitAndReturnElement(LOGIN_BUTTON_LOCATOR);
-	}
-
-	public boolean isLogedOut() {
-		return waitAndReturnElement(LOGGED_OUT_NAVBAR).getCssValue("display").contains("flex");
 	}
 }
