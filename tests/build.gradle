@@ -1,4 +1,4 @@
-plugins {   
+plugins {
     id 'java'
 }
 
@@ -6,7 +6,7 @@ repositories {
     mavenCentral()
 }
 
-dependencies {  
+dependencies {
     testImplementation 'org.seleniumhq.selenium:selenium-java:2.52.0'
     testImplementation 'org.seleniumhq.selenium:selenium-chrome-driver:3.141.59'
     testImplementation('junit:junit:4.12'){
@@ -16,6 +16,13 @@ dependencies {
     testImplementation "org.slf4j:slf4j-simple:1.7.9"
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
+test {
+    systemProperty 'file.encoding', 'UTF-8'
+    jvmArgs '-Dfile.encoding=UTF-8'
+}
 
 

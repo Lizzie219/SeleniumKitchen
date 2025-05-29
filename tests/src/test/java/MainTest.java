@@ -1,4 +1,3 @@
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.*;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -13,7 +12,6 @@ import pages.LoginPage;
 import pages.ProfileEditPage;
 import pages.ProfilePage;
 
-import static org.apache.commons.io.FileUtils.getFile;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -24,9 +22,10 @@ public class MainTest {
 	@Before
 	public void setup() throws MalformedURLException {
 		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--incognito");
+		options.addArguments("start-maximized");
 		this.driver = new RemoteWebDriver(new URL("http://selenium:4444/wd/hub"), options);
 		driver.setFileDetector(new LocalFileDetector());
-		this.driver.manage().window().maximize();
 	}
 
 	@Test
