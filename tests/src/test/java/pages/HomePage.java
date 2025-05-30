@@ -8,7 +8,6 @@ import org.openqa.selenium.interactions.Actions;
 import java.util.concurrent.TimeUnit;
 
 public class HomePage extends Page {
-	private static final Config CONFIG = Config.getConfig();
 	private static final By LOGIN_BUTTON_LOCATOR = By.xpath("//a[@href='/belepes/']");
 	private static final By COOKIE_ACCEPT_BUTTON = By.xpath("//button[@id='accept-btn']");
 

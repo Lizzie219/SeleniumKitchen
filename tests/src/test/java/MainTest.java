@@ -1,3 +1,4 @@
+import config.Config;
 import org.openqa.selenium.chrome.*;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -7,10 +8,7 @@ import java.net.URL;
 import java.net.MalformedURLException;
 
 import org.junit.*;
-import pages.HomePage;
-import pages.LoginPage;
-import pages.ProfileEditPage;
-import pages.ProfilePage;
+import pages.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -18,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 public class MainTest {
 	private RemoteWebDriver driver;
+	private static final Config CONFIG = Config.getConfig();
 
 	@Before
 	public void setup() throws MalformedURLException {
@@ -58,6 +57,24 @@ public class MainTest {
 
 		profileEditPage.changeNameToRandom();
 		assertTrue(profileEditPage.isNameChangeSuccessful());
+
+		SearchResultPage searchResultPage = profileEditPage.searchingForRecipe();
+		RecipePage recipePage = searchResultPage.navigateToRecipePage();
+		recipePage.addRecipeToSavedRecipes();
+		SavedRecipesPage savedRecipePage = recipePage.navigateToSavedRecipes();
+		savedRecipePage.isRecipeSaved(CONFIG.getValuesForRecipeSearching().getValue());
+
+		// static tests
+		StaticPage arcokPage = new StaticPage(driver, CONFIG.getValuesForArcokPageStaticTest().getKey(), CONFIG.getValuesForArcokPageStaticTest().getValue());
+		assertTrue(arcokPage.checkTitle());
+
+		// locator is not okay yet
+		//StaticPage guidePage = new StaticPage(driver, CONFIG.getValuesForGuidePageStaticTest().getKey(), CONFIG.getValuesForGuidePageStaticTest().getValue());
+		//assertTrue(guidePage.checkTitle());
+
+		// logout
+		//guidePage.logOut();
+		//assertTrue(guidePage.isLoggedOut());
 	}
 
 	@After

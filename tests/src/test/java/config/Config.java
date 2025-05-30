@@ -3,8 +3,6 @@ package config;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 public class Config {
@@ -41,7 +39,15 @@ public class Config {
 		return properties.getProperty("password");
 	}
 
-	public Map<String, String> getValuesForRecipeSearching() {
-		return Map.of(properties.getProperty("recipeToSearchFor"), properties.getProperty("recipeToSearchForResult"));
+	public AbstractMap.SimpleEntry<String, String> getValuesForRecipeSearching() {
+		return new AbstractMap.SimpleEntry<>(properties.getProperty("recipeToSearchFor"), properties.getProperty("recipeToSearchForResult"));
+	}
+
+	public AbstractMap.SimpleEntry<String, String> getValuesForArcokPageStaticTest() {
+		return new AbstractMap.SimpleEntry<>(properties.getProperty("arcokPageTitle"), properties.getProperty("arcokPageButton"));
+	}
+
+	public AbstractMap.SimpleEntry<String, String> getValuesForGuidePageStaticTest() {
+		return new AbstractMap.SimpleEntry<>(properties.getProperty("guidePageTitle"), properties.getProperty("guidePageButton"));
 	}
 }

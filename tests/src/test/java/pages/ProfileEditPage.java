@@ -60,6 +60,8 @@ public class ProfileEditPage extends Page {
     }
 
     public SearchResultPage searchingForRecipe() {
-
+        waitAndReturnElement(SEARCH_RECIPE_INPUT).sendKeys(CONFIG.getValuesForRecipeSearching().getKey());
+        waitAndReturnElement(SEARCH_RECIPE_BUTTON).click();
+        return new SearchResultPage(this.driver, CONFIG.getValuesForRecipeSearching().getValue());
     }
 }

@@ -8,7 +8,6 @@ public class LoginPage extends Page {
 	private static final By LOGIN_EMAIL = By.xpath("//input[@id='username' " + POPUP_CONTENT_FILTER + "]");
 	private static final By LOGIN_PASSWORD = By.xpath("//input[@id='password' " + POPUP_CONTENT_FILTER + "]");
 	private static final By LOGIN_BUTTON = By.xpath("//input[@class='user-registration-Button button ' " + POPUP_CONTENT_FILTER + "]");
-	private static final Config CONFIG = Config.getConfig();
 
 	public LoginPage(WebDriver driver) {
 		super(driver);
