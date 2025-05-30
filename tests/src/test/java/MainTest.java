@@ -55,6 +55,9 @@ public class MainTest {
 		assertTrue(profileEditPage.hasProfilePicture());
 		profileEditPage.deleteProfilePicture();
 		assertFalse(profileEditPage.hasProfilePicture());
+
+		profileEditPage.changeNameToRandom();
+		assertTrue(profileEditPage.isNameChangeSuccessful());
 	}
 
 	@After

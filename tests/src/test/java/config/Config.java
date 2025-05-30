@@ -2,6 +2,9 @@ package config;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class Config {
@@ -36,5 +39,9 @@ public class Config {
 
 	public String getPassword() {
 		return properties.getProperty("password");
+	}
+
+	public Map<String, String> getValuesForRecipeSearching() {
+		return Map.of(properties.getProperty("recipeToSearchFor"), properties.getProperty("recipeToSearchForResult"));
 	}
 }
