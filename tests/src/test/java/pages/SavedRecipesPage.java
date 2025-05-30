@@ -9,6 +9,6 @@ public class SavedRecipesPage extends Page{
     }
 
     public boolean isRecipeSaved(String recipeTitle) {
-        return waitAndReturnElement(By.xpath("//a[@title='" + recipeTitle + "' and @class='article-link']")) != null;
+        return waitAndReturnElement(By.xpath("//a[@title='" + recipeTitle + "' and @class='article-link']")).isDisplayed();
     }
 }

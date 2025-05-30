@@ -29,17 +29,17 @@ public class MainTest {
 
 	@Test
 	public void testSelenium() throws InterruptedException {
-		// Login
+		// Title test
 		HomePage homePage = new HomePage(this.driver);
 		homePage.acceptCookies();
 		assertEquals("Street Kitchen - Ahol a főzés kezdődik - Fördős Zé bemutatja", homePage.getTitle());
 		assertTrue(homePage.isLoggedOut());
 
-		// Hover
+		// Hover test
 		assertEquals("rgba(0, 0, 0, 1)", homePage.getLoginButtonColor());
 		assertEquals("rgba(255, 245, 0, 1)", homePage.getLoginButtonColorHovered());
 
-		// Login continued
+		// Login test continued
 		LoginPage loginPage = homePage.goToLoginPage();
 		assertEquals("Belépés | Street Kitchen", loginPage.getTitle());
 		assertTrue(homePage.isLoggedOut());
@@ -47,6 +47,7 @@ public class MainTest {
 		assertTrue(homePage.isLoggedIn());
 		assertEquals("Profilom | Street Kitchen", profilePage.getTitle());
 
+		// Upload photo test
 		ProfileEditPage profileEditPage = profilePage.goToProfileEditPage();
 		assertEquals("Profilom | Street Kitchen", profileEditPage.getTitle());
 		assertFalse(profileEditPage.hasProfilePicture());
@@ -55,14 +56,16 @@ public class MainTest {
 		profileEditPage.deleteProfilePicture();
 		assertFalse(profileEditPage.hasProfilePicture());
 
+		// Send form as a user - change first and last name to a random name test
 		profileEditPage.changeNameToRandom();
 		assertTrue(profileEditPage.isNameChangeSuccessful());
 
+		// Search for a recipe and save it test
 		SearchResultPage searchResultPage = profileEditPage.searchingForRecipe();
 		RecipePage recipePage = searchResultPage.navigateToRecipePage();
 		recipePage.addRecipeToSavedRecipes();
 		SavedRecipesPage savedRecipePage = recipePage.navigateToSavedRecipes();
-		savedRecipePage.isRecipeSaved(CONFIG.getValuesForRecipeSearching().getValue());
+		assertTrue(savedRecipePage.isRecipeSaved(CONFIG.getValuesForRecipeSearching().getValue()));
 
 		// static tests
 		StaticPage arcokPage = new StaticPage(driver, CONFIG.getValuesForArcokPageStaticTest().getKey(), CONFIG.getValuesForArcokPageStaticTest().getValue());
