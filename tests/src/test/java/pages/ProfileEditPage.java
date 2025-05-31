@@ -13,8 +13,8 @@ public class ProfileEditPage extends Page {
     private static final By PROFILE_PICTURE = By.xpath("//img[@class='profile-preview' " + POPUP_CONTENT_FILTER + "]");
     private static final By LAST_NAME = By.xpath("//input[@name='user_registration_last_name' " + POPUP_CONTENT_FILTER + "]");
     private static final By FIRST_NAME = By.xpath("//input[@name='user_registration_first_name' " + POPUP_CONTENT_FILTER + "]");
-    private static final By SEARCH_RECIPE_INPUT = By.xpath("//input[@class='search-field' " + POPUP_CONTENT_FILTER + "]");
-    private static final By SEARCH_RECIPE_BUTTON = By.xpath("//input[@class='search-submit' " + POPUP_CONTENT_FILTER + "]");
+    private static final By SEARCH_RECIPE_INPUT = By.xpath("//div[contains(@class, 'desktop')]//input[@class='search-field']");
+    private static final By SEARCH_RECIPE_BUTTON = By.xpath("//div[contains(@class, 'desktop')]//input[@class='search-submit']");
 
     private static final String PROFILE_PICTURE_PLACEHOLDER_IMAGE_URL = "https://secure.gravatar.com/avatar/6f6be1025fd636ab694043f166a75670?s=96&d=mm&r=g";
 
@@ -57,11 +57,5 @@ public class ProfileEditPage extends Page {
 
     public boolean isNameChangeSuccessful() {
         return waitAndReturnElement(LAST_NAME).getAttribute("value").equals(lastName) && waitAndReturnElement(FIRST_NAME).getAttribute("value").equals(firstName);
-    }
-
-    public SearchResultPage searchingForRecipe() {
-        waitAndReturnElement(SEARCH_RECIPE_INPUT).sendKeys(CONFIG.getValuesForRecipeSearching().getKey());
-        waitAndReturnElement(SEARCH_RECIPE_BUTTON).click();
-        return new SearchResultPage(this.driver, CONFIG.getValuesForRecipeSearching().getValue());
     }
 }

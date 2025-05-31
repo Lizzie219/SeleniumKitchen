@@ -6,6 +6,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.io.File;
 import java.net.URL;
 import java.net.MalformedURLException;
+import java.util.Map;
 
 import org.junit.*;
 import pages.*;
@@ -66,18 +67,14 @@ public class MainTest {
 		recipePage.addRecipeToSavedRecipes();
 		SavedRecipesPage savedRecipePage = recipePage.navigateToSavedRecipes();
 		assertTrue(savedRecipePage.isRecipeSaved(CONFIG.getValuesForRecipeSearching().getValue()));
+		savedRecipePage.removeRecipeFromSaved(CONFIG.getValuesForRecipeSearching().getValue());
 
 		// static tests
-		StaticPage arcokPage = new StaticPage(driver, CONFIG.getValuesForArcokPageStaticTest().getKey(), CONFIG.getValuesForArcokPageStaticTest().getValue());
-		assertTrue(arcokPage.checkTitle());
-
-		// locator is not okay yet
-		//StaticPage guidePage = new StaticPage(driver, CONFIG.getValuesForGuidePageStaticTest().getKey(), CONFIG.getValuesForGuidePageStaticTest().getValue());
-		//assertTrue(guidePage.checkTitle());
+		testStaticPages();
 
 		// logout
-		//guidePage.logOut();
-		//assertTrue(guidePage.isLoggedOut());
+		savedRecipePage.logOut();
+		assertTrue(savedRecipePage.isLoggedOut());
 	}
 
 	@After
@@ -93,5 +90,13 @@ public class MainTest {
 			throw new RuntimeException("Resource not found: " + fileName);
 		}
 		return new File(resource.getFile());
+	}
+
+	private void testStaticPages() {
+        Map<String, String> staticPages = CONFIG.getStaticPages();
+		staticPages.forEach((title, url) -> {
+            StaticPage page = new StaticPage(driver, title, url);
+			assertTrue(page.checkTitle());
+		});
 	}
 }
