@@ -1,0 +1,26 @@
+name: Selenium Tests
+
+on: [push]
+
+jobs:
+  selenium-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Ensure gradlew is executable
+        run: |
+          sudo chmod -R 777 ./tests
+          chmod +x tests/gradlew
+
+      - name: Set up Docker Compose
+        run: |
+          docker compose up -d
+          sleep 15  # give Selenium time to initialize
+
+      - name: Run Tests in Ubuntu Container
+        run: >
+          docker exec seleniumkitchen-ubuntu-1 bash -c
+          "cd tests && ./gradlew test"
